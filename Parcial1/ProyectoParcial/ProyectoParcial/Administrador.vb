@@ -21,3 +21,15 @@
         End Set
     End Property
 End Class
+
+Public Sub New(nombre As String, apellido As String, edad As Integer, usuario As String, clave As String)
+        Me.Nombre = nombre
+        Me.Apellido = apellido
+        Me.Edad = edad
+        Me.Usuario = usuario
+        Me.Clave = clave
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return "nombre: " & Me._nombre & " apellido: " & Me._apellido
+    End Function
