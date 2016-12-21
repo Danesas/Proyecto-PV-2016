@@ -1,5 +1,5 @@
 ﻿Public Class Persona
-    Private _nombre As String
+    Public _nombre As String
     Public Property Nombre() As String
         Get
             Return _nombre
@@ -9,7 +9,7 @@
         End Set
     End Property
 
-    Private _apellido As String
+    Public _apellido As String
     Public Property Apellido() As String
         Get
             Return _apellido
@@ -19,7 +19,7 @@
         End Set
     End Property
 
-    Private _edad As Integer
+    Public _edad As Integer
     Public Property Edad() As Integer
         Get
             Return _edad
