@@ -1,5 +1,5 @@
 ﻿Public Class Candidatos
-
+    inherits Persona
     Private _usuario As String
     Public Property Usuario() As String
         Get
