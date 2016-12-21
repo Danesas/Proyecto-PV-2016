@@ -1,5 +1,19 @@
 ﻿Module Module1
 
+    Dim nombre As String = ""
+    Dim apellido As String = ""
+    Dim edad As Integer = 0
+    Dim usuario As String = ""
+    Dim clave As String = ""
+    Dim dignidad As String = ""
+    Dim cedula As String = ""
+    Dim administradores = New ArrayList()
+    Dim candidatos = New ArrayList()
+    Dim votantes = New ArrayList()
+    Dim a1 As Administrador
+    Dim c1 As Candidatos
+    Dim v1 As Votante
+     
      Enum OpMain
         Invalid
         Adm
@@ -25,8 +39,12 @@
         Dig
         Out
     End Enum
+     
+    Dim path As String = "..\..\personas.xml" 
+    
     Sub Main()
-
+        guardarDatos(path, administradores, candidatos, votantes)
+        mostrarDatos(administradores, candidatos, votantes)
         Dim op As String = ""
         Dim opcion As Byte
 
@@ -69,6 +87,105 @@
 
     End Sub
     
+    Private Sub guardarDatos(path As String, administradores As ArrayList, candidatos As ArrayList, votantes As ArrayList)
+        Dim xmlDoc As New XmlDocument()
+        xmlDoc.Load(path)
+        Dim raiz As XmlNodeList = xmlDoc.GetElementsByTagName("persona")
+        For Each nodo As XmlNode In raiz
+            'administradores = New ArrayList()
+            candidatos = New ArrayList()
+            votantes = New ArrayList()
+            For Each personas As XmlNode In nodo.ChildNodes
+
+                For Each persona As XmlNode In personas.ChildNodes
+                    If nodo.HasChildNodes Then
+
+                        If persona.Name = "nombre" Then
+                            nombre = persona.FirstChild.InnerText
+                        End If
+                        If persona.Name = "apellido" Then
+                            apellido = persona.InnerText
+                        End If
+                        If persona.Name = "edad" Then
+                            edad = persona.InnerText
+                        End If
+                        If persona.Name = "usuario" Then
+                            usuario = persona.InnerText
+                        End If
+                        If persona.Name = "clave" Then
+                            clave = persona.InnerText
+                        End If
+
+                        If persona.Name = "cedula" Then
+                            cedula = persona.InnerText
+                        End If
+
+                        If persona.Name = "dignidad" Then
+                            dignidad = persona.InnerText
+                        End If
+
+                    End If
+
+
+                Next
+                Dim roles As XmlNodeList = xmlDoc.GetElementsByTagName("rol")
+                For Each rol As XmlNode In roles
+
+                    For Each child As XmlNode In rol.ChildNodes
+                        If rol.Attributes("tipo").Value = "Administrador" Then
+                            a1 = New Administrador(nombre, apellido, edad, usuario, clave)
+                            administradores.Add(a1)
+
+                        End If
+                    Next
+                    For Each child As XmlNode In rol.ChildNodes
+                        If rol.Attributes("tipo").Value = "Candidato" Then
+                            c1 = New Candidatos(nombre, apellido, edad, usuario, clave, dignidad)
+                            candidatos.Add(c1)
+
+                        End If
+                    Next
+                    For Each child As XmlNode In rol.ChildNodes
+                        If rol.Attributes("tipo").Value = "Votante" Then
+                            v1 = New Votante(nombre, apellido, edad, cedula)
+                            votantes.Add(v1)
+
+                        End If
+                    Next
+                Next
+
+                Next
+
+        Next
+
+            For Each a As Votante In votantes
+                Console.WriteLine("Administrador")
+                Console.WriteLine(a)
+            Next
+            For Each c As Candidatos In candidatos
+                Console.WriteLine(c)
+            Next
+            For Each v As Votante In votantes
+                Console.WriteLine(v)
+            Next
+    End Sub
+
+    Private Sub mostrarDatos(administradores As ArrayList, candidatos As ArrayList, votantes As ArrayList)
+        administradores = New ArrayList()
+        candidatos = New ArrayList()
+        votantes = New ArrayList()
+        For Each a As Administrador In administradores
+            Console.WriteLine(a)
+        Next
+        For Each c As Candidatos In candidatos
+            Console.WriteLine(c)
+        Next
+        For Each v As Votante In votantes
+            Console.WriteLine(v)
+        Next
+    End Sub
+     
+     
      Sub MenuPrincipal()
         Console.WriteLine("{0}. Administrador", CInt(OpMain.Adm))
         Console.WriteLine("{0}. Votante", CInt(OpMain.Vot))
