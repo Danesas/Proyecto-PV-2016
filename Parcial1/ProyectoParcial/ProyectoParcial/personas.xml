@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<persona>
+    <rol tipo="Administrador">
+        <nombre>Hernan</nombre>
+        <apellido>Quinde</apellido>
+        <edad>24</edad>
+        <usuario>elass</usuario>
+        <clave>megustaelchamp</clave>
+    </rol>
+    <rol tipo="Administrador">
+        <nombre>Daniel</nombre>
+        <apellido>Valencia</apellido>
+        <edad>23</edad>
+        <usuario>elchamp</usuario>
+        <clave>megustaelass</clave>
+    </rol>
+    <rol tipo="Administrador">
+        <nombre>Josty</nombre>
+        <apellido>Mayorga</apellido>
+        <edad>21</edad>
+        <usuario>jostym95</usuario>
+        <clave>ckave123</clave>
+    </rol>
+    <rol tipo="Votante">
+        <nombre>Jonathan</nombre>
+        <apellido>Macias</apellido>
+        <edad>22</edad>
+        <cedula>1785684080</cedula>
+    </rol>
+    <rol tipo="Candidato">
+        <nombre>Joel</nombre>
+        <apellido>Collahuazo</apellido>
+        <edad>23</edad>
+        <usuario>jowpris</usuario>
+        <clave>dianex</clave>
+        <dignidad>presidente</dignidad>
+    </rol>
+</persona>
+
