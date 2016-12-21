@@ -203,6 +203,13 @@
         Console.WriteLine("{0}. Ingresar Su Cédula de Identidad", CInt(OpLoginVot.Ced))
         Console.WriteLine("{0}. Regresar al menú principal", CInt(OpLoginVot.Out))
     End Sub
+
+    Sub MenuLoginCan()
+        Console.WriteLine("{0}. Ingresar Usuario", CInt(OpLoginCan.User))
+        Console.WriteLine("{0}. Ingresar Clave", CInt(OpLoginCan.Pass))
+        Console.WriteLine("{0}. Ingresar Dignidad", CInt(OpLoginCan.Pass))
+        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpLoginCan.Out))
+    End Sub
     
     Sub ManejarLoginAdm()
         Dim op As String = ""
@@ -268,6 +275,39 @@
                     Console.WriteLine("XXXXX OPCION INVALIDA XXXXX")
             End Select
         Loop Until opcion = OpLoginVot.Out
+    End Sub
+
+    Sub ManejarLoginCan()
+        Dim op As String = ""
+        Dim opcion As Byte
+        Dim user As String
+        Dim pass As String
+        Dim dig As String
+        Do
+            MenuLoginCan()
+
+            op = Console.ReadLine()
+            opcion = CByte(op) 'Byte.parse()
+
+            Console.WriteLine("Usted ha ingresado: {0}", op)
+            Console.ReadLine()
+
+            Select Case opcion
+                Case OpLoginCan.User
+                    Console.WriteLine("Cedula:")
+                    user = Console.ReadLine()
+                Case OpLoginCan.Pass
+                    Console.WriteLine("Clave")
+                    pass = Console.ReadLine()
+                Case OpLoginCan.Dig
+                    Console.WriteLine("Dignidad")
+                    dig = Console.ReadLine()
+                Case OpLoginCan.Out
+                    Console.WriteLine("Volver al menú principal")
+                Case Else
+                    Console.WriteLine("XXXXX OPCION INVALIDA XXXXX")
+            End Select
+        Loop Until opcion = OpLoginCan.Out
     End Sub
 
 End Module
