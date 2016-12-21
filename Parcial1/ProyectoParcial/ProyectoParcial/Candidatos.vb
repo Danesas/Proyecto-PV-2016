@@ -29,5 +29,17 @@
             _dignidad = value
         End Set
     End Property
+Public Sub New(nombre As String, apellido As String, edad As Integer, usuario As String, clave As String, dignidad As String)
+        Me.Nombre = nombre
+        Me.Apellido = apellido
+        Me.Edad = edad
+        Me.Usuario = usuario
+        Me.Clave = clave
+        Me.Dignidad = dignidad
+    End Sub
 
+
+    Public Overrides Function ToString() As String
+        Return "nombre: " & Me.Nombre & " apellido: " & Me.Apellido
+    End Function
 End Class
