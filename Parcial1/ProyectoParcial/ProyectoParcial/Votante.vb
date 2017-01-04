@@ -11,11 +11,13 @@
         End Set
     End Property
 
-    Public Sub New(nombre As String, apellido As String, edad As Integer, cedula As String)
+    Public Sub New(nombre As String, apellido As String, edad As Integer, cedula As String, rol As String)
+
         Me.Nombre = nombre
         Me.Apellido = apellido
         Me.Edad = edad
         Me.Cedula = cedula
+        Me.Rol = rol
     End Sub
 
     Public Overrides Function ToString() As String
