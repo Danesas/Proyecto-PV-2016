@@ -1,4 +1,17 @@
 ﻿Public Class Persona
+    
+    
+    Public _rol As String
+    Public Property Rol() As String
+        Get
+            Return _rol
+        End Get
+        Set(ByVal value As String)
+            _rol = value
+        End Set
+    End Property
+    
+    
     Public _nombre As String
     Public Property Nombre() As String
         Get
