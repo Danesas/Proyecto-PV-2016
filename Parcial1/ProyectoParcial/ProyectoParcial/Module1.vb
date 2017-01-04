@@ -16,15 +16,22 @@
      
      Enum OpMain
         Invalid
-        Adm
+        Usu
         Vot
-        Can
         Out
     End Enum
 
-    Enum OpLoginAdm
+    Enum OpLogin
         User = 1
         Pass
+        Out
+    End Enum
+    
+    Enum OpAdministrador
+        Dig = 1
+        Can
+        Res
+        List
         Out
     End Enum
 
@@ -32,17 +39,22 @@
         Ced = 1
         Out
     End Enum
+    
+    Enum OpVotar
+        Ced = 1
+        Out
+    End Enum
 
-    Enum OpLoginCan
-        User = 1
-        Pass
-        Dig
+    Enum OpCandidato
+        Result = 1
         Out
     End Enum
      
     Dim path As String = "..\..\personas.xml" 
     
     Sub Main()
+        
+        limpiarArreglos()
         guardarDatos(path, administradores, candidatos, votantes)
         mostrarDatos(administradores, candidatos, votantes)
         Dim op As String = ""
@@ -54,28 +66,23 @@
             op = Console.ReadLine()
 
             Try
-                opcion = CByte(op) 'Byte.parse()
+                opcion = CByte(op)
             Catch ex As OverflowException
                 opcion = 255
             Catch ex As Exception
                 opcion = OpMain.Invalid
             End Try
 
-
-
             Console.WriteLine("Usted ha ingresado: {0}", op)
             Console.ReadLine()
 
             Select Case opcion
-                Case OpMain.Adm
-                    Console.WriteLine("Administrador")
-                    ManejarLoginAdm()
+                Case OpMain.Usu
+                    Console.WriteLine("Iniciar Usuario")
+                    ManejarLogin()
                 Case OpMain.Vot
-                    Console.WriteLine("Votante")
+                    Console.WriteLine("Iniciar Votante")
                     ManejarLoginVot()
-                Case OpMain.Can
-                    Console.WriteLine("Candidato")
-                    ManejarLoginCan()
                 Case OpMain.Out
                     Console.WriteLine("Cerrando Aplicación")
                 Case Else
