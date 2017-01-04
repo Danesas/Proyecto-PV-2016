@@ -62,7 +62,7 @@
         Out
     End Enum
      
-    Dim path As String = "..\..\personas.xml" 
+    Dim path As String = "..\..\recinto.xml" 
     
     Sub Main()
         
