@@ -1,6 +1,14 @@
 ﻿Module Module1
 
+    Dim contador As Integer = 1
+    Dim con As Integer = 1
+    Dim votado As String = ""
+    Dim cont As Integer = 0
+    Dim temp As String = ""
+    Dim user As String
+    Dim rol As String = ""
     Dim nombre As String = ""
+    Dim nombreDig As String = ""
     Dim apellido As String = ""
     Dim edad As Integer = 0
     Dim usuario As String = ""
@@ -94,104 +102,79 @@
 
     End Sub
     
-    Private Sub guardarDatos(path As String, administradores As ArrayList, candidatos As ArrayList, votantes As ArrayList)
+    Private Sub guardarDatos(path As String, personas As ArrayList, administradores As ArrayList, votantes As ArrayList, candidatos As ArrayList, dignidades As ArrayList)
         Dim xmlDoc As New XmlDocument()
         xmlDoc.Load(path)
         Dim raiz As XmlNodeList = xmlDoc.GetElementsByTagName("persona")
         For Each nodo As XmlNode In raiz
-            'administradores = New ArrayList()
-            candidatos = New ArrayList()
-            votantes = New ArrayList()
-            For Each personas As XmlNode In nodo.ChildNodes
 
-                For Each persona As XmlNode In personas.ChildNodes
-                    If nodo.HasChildNodes Then
+            For Each persona As XmlNode In nodo.ChildNodes
+                If nodo.HasChildNodes Then
 
-                        If persona.Name = "nombre" Then
-                            nombre = persona.FirstChild.InnerText
-                        End If
-                        If persona.Name = "apellido" Then
-                            apellido = persona.InnerText
-                        End If
-                        If persona.Name = "edad" Then
-                            edad = persona.InnerText
-                        End If
-                        If persona.Name = "usuario" Then
-                            usuario = persona.InnerText
-                        End If
-                        If persona.Name = "clave" Then
-                            clave = persona.InnerText
+                    If persona.Name = "nombre" Then
+                        nombre = persona.InnerText
+                    End If
+                    If persona.Name = "apellido" Then
+                        apellido = persona.InnerText
+                    End If
+                    If persona.Name = "edad" Then
+                        edad = persona.InnerText
+                    End If
+                    If persona.Name = "usuario" Then
+                        usuario = persona.InnerText
+                    End If
+                    If persona.Name = "clave" Then
+                        clave = persona.InnerText
+                    End If
+                    If persona.Name = "cedula" Then
+                        cedula = persona.InnerText
+                    End If
+                    If persona.Name = "dignidad" Then
+                        dignidad = persona.InnerText
+                    End If
+                    If persona.Name = "voto" Then
+                        voto = persona.InnerText
+                    End If
+                    If persona.Name = "rol" Then
+                        rol = persona.InnerText
+                        If rol = "Administrador" Then
+                            a1 = New Administrador(nombre, apellido, edad, usuario, clave, rol)
+                            administradores.Add(a1)
+                            personas.Add(a1)
                         End If
 
-                        If persona.Name = "cedula" Then
-                            cedula = persona.InnerText
+                        If rol = "Votante" Then
+                            v1 = New Votante(nombre, apellido, edad, cedula, rol)
+                            votantes.Add(v1)
+                            personas.Add(v1)
                         End If
 
-                        If persona.Name = "dignidad" Then
-                            dignidad = persona.InnerText
+                        If rol = "Candidato" Then
+                            c1 = New Candidatos(nombre, apellido, edad, usuario, clave, dignidad, voto, rol)
+                            candidatos.Add(c1)
+                            personas.Add(c1)
                         End If
 
                     End If
 
-
-                Next
-                Dim roles As XmlNodeList = xmlDoc.GetElementsByTagName("rol")
-                For Each rol As XmlNode In roles
-
-                    For Each child As XmlNode In rol.ChildNodes
-                        If rol.Attributes("tipo").Value = "Administrador" Then
-                            a1 = New Administrador(nombre, apellido, edad, usuario, clave)
-                            administradores.Add(a1)
-
-                        End If
-                    Next
-                    For Each child As XmlNode In rol.ChildNodes
-                        If rol.Attributes("tipo").Value = "Candidato" Then
-                            c1 = New Candidatos(nombre, apellido, edad, usuario, clave, dignidad)
-                            candidatos.Add(c1)
-
-                        End If
-                    Next
-                    For Each child As XmlNode In rol.ChildNodes
-                        If rol.Attributes("tipo").Value = "Votante" Then
-                            v1 = New Votante(nombre, apellido, edad, cedula)
-                            votantes.Add(v1)
-
-                        End If
-                    Next
-                Next
-
-                Next
-
-        Next
-
-            For Each a As Votante In votantes
-                Console.WriteLine("Administrador")
-                Console.WriteLine(a)
+                End If
             Next
-            For Each c As Candidatos In candidatos
-                Console.WriteLine(c)
-            Next
-            For Each v As Votante In votantes
-                Console.WriteLine(v)
-            Next
-    End Sub
+        Next
+        Dim raiz2 As XmlNodeList = xmlDoc.GetElementsByTagName("dignidad")
+        For Each nodo As XmlNode In raiz2
 
-    Private Sub mostrarDatos(administradores As ArrayList, candidatos As ArrayList, votantes As ArrayList)
-        administradores = New ArrayList()
-        candidatos = New ArrayList()
-        votantes = New ArrayList()
-        For Each a As Administrador In administradores
-            Console.WriteLine(a)
+            For Each dignidad As XmlNode In nodo.ChildNodes
+                If nodo.HasChildNodes Then
+                    If dignidad.Name = "nombre" Then
+                        nombreDig = dignidad.InnerText
+                        d1 = New Dignidad(nombreDig)
+                        dignidades.Add(d1)
+                    End If
+                End If
+            Next
+
         Next
-        For Each c As Candidatos In candidatos
-            Console.WriteLine(c)
-        Next
-        For Each v As Votante In votantes
-            Console.WriteLine(v)
-        Next
-    End Sub
-     
+    End Sub   
      
      Sub MenuPrincipal()
         Console.WriteLine("Menú Login")
@@ -377,6 +360,40 @@
         Loop Until opcion = OpCandidato.Out
     End Sub
 
+
+    Private Sub AgregarDignidad(path As String, texto As String)
+        Dim xmlDoc As New XmlDocument()
+        xmlDoc.Load(path)
+        Dim recintos As XmlNodeList = xmlDoc.GetElementsByTagName("recinto")
+        For Each rec As XmlNode In recintos
+            Console.WriteLine(rec.Name)
+            Dim dignidad As XmlNode
+            Dim nombre As XmlNode
+
+            dignidad = xmlDoc.CreateElement("dignidad")
+            nombre = xmlDoc.CreateElement("nombre")
+            rec.AppendChild(dignidad)
+            dignidad.AppendChild(nombre)
+            nombre.InnerText = texto
+        Next
+        xmlDoc.Save(path)
+    End Sub
+
+    Private Sub mostrarResultado(dignidades As ArrayList, candidatos As ArrayList)
+        limpiarArreglos()
+        guardarDatos(path, personas, administradores, votantes, candidatos, dignidades)
+        For Each d As Dignidad In dignidades
+            Console.WriteLine(d.NombreDig)
+            For Each c As Candidatos In candidatos
+                If (c.Dignidad = d.NombreDig) Then
+                    Console.WriteLine(c.Nombre & " " & CStr(c.Voto))
+                End If
+            Next
+        Next
+    End Sub
+
+
+
     Private Sub ListaCandidatos(dignidades As ArrayList, candidatos As ArrayList)
         limpiarArreglos()
         guardarDatos(path, personas, administradores, votantes, candidatos, dignidades)
@@ -397,6 +414,29 @@
         candidatos.Clear()
         dignidades.Clear()
     End Sub
+
+
+    Private Sub mostrarResultadoCand(dignidades As ArrayList, candidatos As ArrayList, usuario As String)
+        limpiarArreglos()
+        guardarDatos(path, personas, administradores, votantes, candidatos, dignidades)
+        For Each c1 As Candidatos In candidatos
+            If c1.Usuario = user Then
+                temp = c1.Dignidad
+            End If
+        Next
+
+        For Each d As Dignidad In dignidades
+            If (d.NombreDig = temp) Then
+                Console.WriteLine(d.NombreDig)
+                For Each c As Candidatos In candidatos
+                    If (c.Dignidad = d.NombreDig) Then
+                        Console.WriteLine(c.Nombre & " " & CStr(c.Voto))
+                    End If
+                Next
+            End If
+        Next
+    End Sub
+
 
     Private Sub MenuVotar()
         Dim votar As Integer
@@ -429,6 +469,26 @@
             Next
             AgregarVoto(path, votado)
         Next
+    End Sub
+
+    Private Sub AgregarVoto(path As String, votado As String)
+        Dim xmlDoc As New XmlDocument()
+        xmlDoc.Load(path)
+        Dim raiz2 As XmlNodeList = xmlDoc.GetElementsByTagName("persona")
+        For Each nodo As XmlNode In raiz2
+            For Each persona As XmlNode In nodo.ChildNodes
+                If nodo.HasChildNodes Then
+                    If persona.Name = "nombre" Then
+                        If persona.InnerText = votado Then
+                            'Console.WriteLine(persona.InnerText)
+                            Dim p As XmlElement = nodo
+                            p("voto").InnerText += con
+                        End If
+                    End If
+                End If
+            Next
+        Next
+        xmlDoc.Save(path)
     End Sub
 
 End Module
