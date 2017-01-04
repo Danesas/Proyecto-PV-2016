@@ -194,16 +194,16 @@
      
      
      Sub MenuPrincipal()
-        Console.WriteLine("{0}. Administrador", CInt(OpMain.Adm))
-        Console.WriteLine("{0}. Votante", CInt(OpMain.Vot))
-        Console.WriteLine("{0}. Candidato", CInt(OpMain.Can))
-        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpMain.Out))
+        Console.WriteLine("Menú Login")
+        Console.WriteLine("{0}. Iniciar Usuario", CInt(OpMain.Usu))
+        Console.WriteLine("{0}. Iniciar Votante", CInt(OpMain.Vot))
+        Console.WriteLine("{0}. Salir", CInt(OpMain.Out))
     End Sub
 
-    Sub MenuLoginAdm()
-        Console.WriteLine("{0}. Ingresar Usuario", CInt(OpLoginAdm.User))
-        Console.WriteLine("{0}. Ingresar Clave", CInt(OpLoginAdm.Pass))
-        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpLoginAdm.Out))
+    Sub MenuLogin()
+        Console.WriteLine("{0}. Ingresar Usuario", CInt(OpLogin.User))
+        Console.WriteLine("{0}. Ingresar Clave", CInt(OpLogin.Pass))
+        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpLogin.Out))
     End Sub
 
     Sub MenuLoginVot()
@@ -211,63 +211,98 @@
         Console.WriteLine("{0}. Regresar al menú principal", CInt(OpLoginVot.Out))
     End Sub
 
-    Sub MenuLoginCan()
-        Console.WriteLine("{0}. Ingresar Usuario", CInt(OpLoginCan.User))
-        Console.WriteLine("{0}. Ingresar Clave", CInt(OpLoginCan.Pass))
-        Console.WriteLine("{0}. Ingresar Dignidad", CInt(OpLoginCan.Pass))
-        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpLoginCan.Out))
+    Sub MenuCan()
+        Console.WriteLine("{0}. Mostrar Resultados", CInt(OpCandidato.Result))
+        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpCandidato.Out))
+    End Sub
+
+    Sub MenuAdm()
+        Console.WriteLine("Administrador")
+        Console.WriteLine("{0}. Agregar Dignidad", CInt(OpAdministrador.Dig))
+        Console.WriteLine("{0}. Agregar Candidato", CInt(OpAdministrador.Can))
+        Console.WriteLine("{0}. Mostrar Resultado", CInt(OpAdministrador.Res))
+        Console.WriteLine("{0}. Lista Candidatos", CInt(OpAdministrador.List))
+        Console.WriteLine("{0}. Regresar al menú principal", CInt(OpAdministrador.Out))
     End Sub
     
-    Sub ManejarLoginAdm()
+    Sub ManejarLogin()
         Dim op As String = ""
         Dim opcion As Byte
-        Dim user As String
         Dim pass As String
+
         Do
-            MenuLoginAdm()
+            MenuLogin()
 
             op = Console.ReadLine()
-            opcion = CByte(op) 'Byte.parse()
+            Try
+                opcion = CByte(op) 'Byte.parse()
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+            End Try
 
             Console.WriteLine("Usted ha ingresado: {0}", op)
             Console.ReadLine()
 
             Select Case opcion
-                Case OpLoginAdm.User
+                Case OpLogin.User
                     Console.WriteLine("Usuario:")
                     user = Console.ReadLine()
-                    'Console.WriteLine("usuario correcto")
+                Case OpLogin.Pass
+                    Console.WriteLine("Clave: ")
+                    pass = Console.ReadLine()
+
                     For Each a As Administrador In administradores
 
-                        If user = a.Usuario Then
-                            Console.WriteLine("usuario correcto")
-                            Exit For
-                        Else
-                            Console.WriteLine("usuario incorrecto")
+                        For Each c As Candidatos In candidatos
 
+                            If pass = c.Clave Then
+                                Console.WriteLine("contraseña correcta")
+                                If user = c.Usuario Then
+                                    ManejarCan()
+                                    Exit For
+                                End If
+                            End If
+
+                        Next
+
+                        If pass = a.Clave Then
+                            Console.WriteLine("contraseña correcta")
+                            If user = a.Usuario Then
+                                ManejarAdm()
+                                Exit For
+                            End If
                         End If
 
                     Next
-                Case OpLoginAdm.Pass
-                    Console.WriteLine("Clave")
-                    pass = Console.ReadLine()
-                Case OpLoginAdm.Out
+                    Console.WriteLine("usuario o contraseña incorrecta")
+
+                Case OpLogin.Out
                     Console.WriteLine("Volver al menú principal")
+
                 Case Else
                     Console.WriteLine("XXXXX OPCION INVALIDA XXXXX")
             End Select
-        Loop Until opcion = OpLoginAdm.Out
+        Loop Until opcion = OpLogin.Out
     End Sub
 
     Sub ManejarLoginVot()
         Dim op As String = ""
         Dim opcion As Byte
-        Dim user As String
+        Dim ced As String = ""
+
         Do
             MenuLoginVot()
 
             op = Console.ReadLine()
-            opcion = CByte(op) 'Byte.parse()
+            Try
+                opcion = CByte(op) 'Byte.parse()
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+            End Try
 
             Console.WriteLine("Usted ha ingresado: {0}", op)
             Console.ReadLine()
@@ -275,46 +310,125 @@
             Select Case opcion
                 Case OpLoginVot.Ced
                     Console.WriteLine("Cedula:")
-                    user = Console.ReadLine()
+                    ced = Console.ReadLine()
+
+
+                    For Each v As Votante In votantes
+                        For Each hechos As Votante In votoshecho
+                            If ced = hechos.Cedula Then
+                                Console.WriteLine("Usted ya ha votado")
+                                ManejarLoginVot()
+                            End If
+                        Next
+                        If ced = v.Cedula Then
+                            Console.WriteLine("usuario correcto")
+                            Console.WriteLine("Bienvenido: " & v.Nombre)
+                            votoshecho.Add(v)
+                            MenuVotar()
+                        End If
+
+                    Next
+
+                    Console.WriteLine("usuario incorrecto")
+
                 Case OpLoginVot.Out
                     Console.WriteLine("Volver al menú principal")
+                    Main()
                 Case Else
                     Console.WriteLine("XXXXX OPCION INVALIDA XXXXX")
+
             End Select
         Loop Until opcion = OpLoginVot.Out
     End Sub
 
-    Sub ManejarLoginCan()
+    Sub ManejarCan()
         Dim op As String = ""
         Dim opcion As Byte
-        Dim user As String
-        Dim pass As String
-        Dim dig As String
+        Dim resultados As String
+
         Do
-            MenuLoginCan()
+            MenuCan()
 
             op = Console.ReadLine()
-            opcion = CByte(op) 'Byte.parse()
+            Try
+                opcion = CByte(op) 'Byte.parse()
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+            End Try
 
             Console.WriteLine("Usted ha ingresado: {0}", op)
             Console.ReadLine()
 
             Select Case opcion
-                Case OpLoginCan.User
-                    Console.WriteLine("Cedula:")
-                    user = Console.ReadLine()
-                Case OpLoginCan.Pass
-                    Console.WriteLine("Clave")
-                    pass = Console.ReadLine()
-                Case OpLoginCan.Dig
-                    Console.WriteLine("Dignidad")
-                    dig = Console.ReadLine()
-                Case OpLoginCan.Out
+                Case OpCandidato.Result
+                    Console.WriteLine("Mostrar Resultados")
+                    resultados = Console.ReadLine()
+                    mostrarResultadoCand(dignidades, candidatos, user)
+
+                Case OpCandidato.Out
                     Console.WriteLine("Volver al menú principal")
+                    Main()
+
                 Case Else
                     Console.WriteLine("XXXXX OPCION INVALIDA XXXXX")
             End Select
-        Loop Until opcion = OpLoginCan.Out
+        Loop Until opcion = OpCandidato.Out
+    End Sub
+
+    Private Sub ListaCandidatos(dignidades As ArrayList, candidatos As ArrayList)
+        limpiarArreglos()
+        guardarDatos(path, personas, administradores, votantes, candidatos, dignidades)
+        For Each d As Dignidad In dignidades
+            Console.WriteLine(d.NombreDig)
+            For Each c As Candidatos In candidatos
+                If (c.Dignidad = d.NombreDig) Then
+                    Console.WriteLine(c.Nombre & " " & c.Apellido)
+                End If
+            Next
+        Next
+    End Sub
+
+    Private Sub limpiarArreglos()
+        personas.Clear()
+        administradores.Clear()
+        votantes.Clear()
+        candidatos.Clear()
+        dignidades.Clear()
+    End Sub
+
+    Private Sub MenuVotar()
+        Dim votar As Integer
+        Dim num As Integer = 1
+        For Each d As Dignidad In dignidades
+            Console.WriteLine(d.NombreDig)
+            For Each c As Candidatos In candidatos
+                If (c.Dignidad = d.NombreDig) Then
+                    Console.WriteLine("{0}. " & c.Nombre & " " & c.Apellido & " ", CStr(num))
+                    num = 1 + num
+                End If
+            Next
+
+            Console.WriteLine("{0}. Blanco", num)
+            Console.WriteLine("{0}. Nulo", num + 1)
+            num = 1
+            votar = Console.ReadLine()
+            votar = votar + cont
+
+            For Each c As Candidatos In candidatos
+                If (c.Dignidad = d.NombreDig) Then
+                    cont = cont + 1
+                    If votar = cont Then
+                        votado = c.Nombre
+                        Console.WriteLine(votado)
+                        cont = votar + cont
+                        Exit For
+                    End If
+                End If
+            Next
+            AgregarVoto(path, votado)
+        Next
     End Sub
 
 End Module
