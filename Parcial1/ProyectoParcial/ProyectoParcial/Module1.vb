@@ -364,6 +364,73 @@
         Loop Until opcion = OpCandidato.Out
     End Sub
 
+    Sub ManejarAdm()
+        Dim op As String = ""
+        Dim opcion As Byte
+        Dim nombreDig As String
+        Dim nombreCan As String
+        Dim apellidoCan As String
+        Dim edadCan As String
+        Dim usuarioCan As String
+        Dim claveCan As String
+        Dim dignidadCan As String
+
+        Do
+            MenuAdm()
+
+            op = Console.ReadLine()
+            Try
+                opcion = CByte(op) 'Byte.parse()
+            Catch ex As OverflowException
+                opcion = 255
+            Catch ex As Exception
+                opcion = OpMain.Invalid
+            End Try
+
+            Console.WriteLine("Usted ha ingresado: {0}", op)
+            Console.ReadLine()
+
+            Select Case opcion
+                Case OpAdministrador.Dig
+                    Console.WriteLine("Agregar Dignidad")
+                    Console.WriteLine("Ingresar Nombre:")
+                    nombreDig = Console.ReadLine()
+                    AgregarDignidad(path, nombreDig)
+
+                Case OpAdministrador.Can
+                    Console.WriteLine("Agregar Candidato")
+                    Console.WriteLine("Ingrese nombre:")
+                    nombreCan = Console.ReadLine()
+                    Console.WriteLine("Ingrese apellido:")
+                    apellidoCan = Console.ReadLine()
+                    Console.WriteLine("Ingresar edad:")
+                    edadCan = Console.ReadLine()
+                    Console.WriteLine("Ingresar el usuario:")
+                    usuarioCan = Console.ReadLine()
+                    Console.WriteLine("Ingresar la clave:")
+                    claveCan = Console.ReadLine()
+                    Console.WriteLine("Ingresar dignidad:")
+                    dignidadCan = Console.ReadLine()
+
+                    AgregarCandidato(path, nombreCan, apellidoCan, edadCan, usuarioCan, claveCan, dignidadCan)
+                    ManejarAdm()
+                Case OpAdministrador.Res
+                    Console.WriteLine("Mostrar Resultado")
+                    mostrarResultado(dignidades, candidatos)
+
+                Case OpAdministrador.List
+                    Console.WriteLine("Lista Candidatos")
+                    ListaCandidatos(dignidades, candidatos)
+
+                Case OpAdministrador.Out
+                    Console.WriteLine("Volver al menú principal")
+                    Main()
+
+                Case Else
+                    Console.WriteLine("XXXXX OPCION INVALIDA XXXXX")
+            End Select
+        Loop Until opcion = OpCandidato.Out
+    End Sub
 
     Private Sub AgregarDignidad(path As String, texto As String)
         Dim xmlDoc As New XmlDocument()
