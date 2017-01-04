@@ -39,6 +39,90 @@
     <rol>Votante</rol>
   </persona>
   <persona>
+    <nombre>María</nombre>
+    <apellido>Sandoya</apellido>
+    <edad>21</edad>
+    <cedula>9876543210</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Jocelyn</nombre>
+    <apellido>Velez</apellido>
+    <edad>20</edad>
+    <cedula>6593720577</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Guillermo</nombre>
+    <apellido>Valencia</apellido>
+    <edad>54</edad>
+    <cedula>1630578501</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>María</nombre>
+    <apellido>Escalante</apellido>
+    <edad>55</edad>
+    <cedula>4485091635</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Jonathan</nombre>
+    <apellido>Larrea</apellido>
+    <edad>28</edad>
+    <cedula>3232856099</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Ronny</nombre>
+    <apellido>Valdivieso</apellido>
+    <edad>23</edad>
+    <cedula>5467623498</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Ana</nombre>
+    <apellido>Belén</apellido>
+    <edad>22</edad>
+    <cedula>7764512345</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Lionel</nombre>
+    <apellido>Messi</apellido>
+    <edad>29</edad>
+    <cedula>9671253079</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Cristiano</nombre>
+    <apellido>Ronaldo</apellido>
+    <edad>31</edad>
+    <cedula>1234879634</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Gareth</nombre>
+    <apellido>Bale</apellido>
+    <edad>27</edad>
+    <cedula>1231231239</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>German</nombre>
+    <apellido>Garmendia</apellido>
+    <edad>26</edad>
+    <cedula>6574306874</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
+    <nombre>Rubén</nombre>
+    <apellido>Doblas</apellido>
+    <edad>26</edad>
+    <cedula>3347681123</cedula>
+    <rol>Votante</rol>
+  </persona>
+  <persona>
     <nombre>Joel</nombre>
     <apellido>Collahuazo</apellido>
     <edad>23</edad>
@@ -61,7 +145,7 @@
     <usuario>defonix</usuario>
     <clave>dota</clave>
     <dignidad>presidente</dignidad>
-    <voto>14</voto>
+    <voto>18</voto>
     <rol>Candidato</rol>
   </persona>
   <persona>
@@ -71,7 +155,7 @@
     <usuario>angulex</usuario>
     <clave>dani</clave>
     <dignidad>prefecto</dignidad>
-    <voto>13</voto>
+    <voto>12</voto>
     <rol>Candidato</rol>
   </persona>
   <dignidad>
@@ -84,7 +168,17 @@
     <usuario>solangejmc</usuario>
     <clave>josty</clave>
     <dignidad>asambleista</dignidad>
-    <voto>10</voto>
+    <voto>13</voto>
+    <rol>Candidato</rol>
+  </persona>
+  <persona>
+    <nombre>Carlos</nombre>
+    <apellido>Espinal</apellido>
+    <edad>25</edad>
+    <usuario>elemo</usuario>
+    <clave>glanique</clave>
+    <dignidad>prefecto</dignidad>
+    <voto>1</voto>
     <rol>Candidato</rol>
   </persona>
 </recinto>
