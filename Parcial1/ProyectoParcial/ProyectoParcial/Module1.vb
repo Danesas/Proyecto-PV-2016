@@ -15,13 +15,16 @@
     Dim clave As String = ""
     Dim dignidad As String = ""
     Dim cedula As String = ""
-     Dim votoshecho = New ArrayList()
+    Dim personas = New ArrayList()
+    Dim votoshecho = New ArrayList()
     Dim administradores = New ArrayList()
     Dim candidatos = New ArrayList()
     Dim votantes = New ArrayList()
+    Dim dignidades = New ArrayList()
     Dim a1 As Administrador
     Dim c1 As Candidatos
     Dim v1 As Votante
+    Dim d1 As Dignidad
      
      Enum OpMain
         Invalid
@@ -380,6 +383,55 @@
         xmlDoc.Save(path)
     End Sub
 
+
+    Private Sub AgregarCandidato(path As String, textoNombre As String, textoApellido As String, textoEdad As String, textoUsuario As String, textoClave As String, textoDignidad As String)
+        Dim xmlDoc As New XmlDocument()
+        xmlDoc.Load(path)
+        Dim recintos As XmlNodeList = xmlDoc.GetElementsByTagName("recinto")
+        For Each rec As XmlNode In recintos
+            Console.WriteLine(rec.Name)
+            Dim persona As XmlNode
+            Dim nombre As XmlNode
+            Dim apellido As XmlNode
+            Dim edad As XmlNode
+            Dim usuario As XmlNode
+            Dim clave As XmlNode
+            Dim dignidad As XmlNode
+            Dim voto As XmlNode
+            Dim rol As XmlNode
+
+            persona = xmlDoc.CreateElement("persona")
+            nombre = xmlDoc.CreateElement("nombre")
+            apellido = xmlDoc.CreateElement("apellido")
+            edad = xmlDoc.CreateElement("edad")
+            usuario = xmlDoc.CreateElement("usuario")
+            clave = xmlDoc.CreateElement("clave")
+            dignidad = xmlDoc.CreateElement("dignidad")
+            voto = xmlDoc.CreateElement("voto")
+            rol = xmlDoc.CreateElement("rol")
+
+            rec.AppendChild(persona)
+            persona.AppendChild(nombre)
+            persona.AppendChild(apellido)
+            persona.AppendChild(edad)
+            persona.AppendChild(usuario)
+            persona.AppendChild(clave)
+            persona.AppendChild(dignidad)
+            persona.AppendChild(voto)
+            persona.AppendChild(rol)
+
+            nombre.InnerText = textoNombre
+            apellido.InnerText = textoApellido
+            edad.InnerText = textoEdad
+            usuario.InnerText = textoUsuario
+            clave.InnerText = textoClave
+            dignidad.InnerText = textoDignidad
+            voto.InnerText = 0
+            rol.InnerText = "Candidato"
+
+        Next
+        xmlDoc.Save(path)
+    End Sub
     Private Sub mostrarResultado(dignidades As ArrayList, candidatos As ArrayList)
         limpiarArreglos()
         guardarDatos(path, personas, administradores, votantes, candidatos, dignidades)
