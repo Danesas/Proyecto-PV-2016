@@ -1,4 +1,4 @@
-Public Class Administrador
+﻿Public Class Administrador
     Inherits Persona
 
     Private _usuario As String
