@@ -15,6 +15,7 @@
     Dim clave As String = ""
     Dim dignidad As String = ""
     Dim cedula As String = ""
+     Dim votoshecho = New ArrayList()
     Dim administradores = New ArrayList()
     Dim candidatos = New ArrayList()
     Dim votantes = New ArrayList()
